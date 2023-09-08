@@ -1,12 +1,12 @@
-import Link from 'next/link'
-import Messages from './messages'
+import Link from 'next/link';
+import Messages from './messages';
 
 export default function Login() {
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+    <div className="relative w-full h-full flex-1 flex flex-col px-8 justify-center content-center items-center gap-2">
       <Link
         href="/"
-        className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
+        className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-tremor-brand hover:bg-tremor-brand-subtle flex items-center group text-sm"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@ export default function Login() {
       </Link>
 
       <form
-        className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
+        className="flex-1 flex flex-col w-full md:w-1/3 justify-center gap-2 text-gray-100"
         action="/auth/sign-in"
         method="post"
       >
@@ -49,17 +49,17 @@ export default function Login() {
           placeholder="••••••••"
           required
         />
-        <button className="bg-green-700 rounded px-4 py-2 text-white mb-2">
+        <button className="bg-tremor-brand rounded px-4 py-2 mb-2">
           Sign In
         </button>
         <button
           formAction="/auth/sign-up"
-          className="border border-gray-700 rounded px-4 py-2 text-black mb-2"
+          className="border border-gray-500 rounded px-4 py-2 mb-2"
         >
           Sign Up
         </button>
         <Messages />
       </form>
     </div>
-  )
+  );
 }
