@@ -1,3 +1,55 @@
+# OPTIBUS
+
+## PROJEKTPLANUNG
+Erstellung einer Verwaltungssoftware für ein Reisebus-Unternehmen
+
+### THEMA
+Die Entwicklung einer Verwaltungssoftware für ein Reisebus-Unternehmen, die zudem im Browser global für Kunden zugänglich ist.
+
+### TECHNOLOGIESTACK
+NEXTJS Ein JavaScript-Framework, das die Entwicklung im Web-Bereich unterstützt.
+TYPESCRIPT Zur Typisierung von Variablen und zur Verbesserung der Code-Qualität.
+TAILWINDCSS Zur schnellen und effizienten Implementierung von CSS im Code.
+SUPABASE Als Backend-Datenbank, die eine API-Schnittstelle für die Datenverwaltung bereitstellt.
+VISUAL STUDIO CODE Die integrierte Entwicklungsumgebung (IDE) für die Code-Entwicklung.
+
+### MEILENSTEINE
+
+#### DATENBANKTABELLEN
+
+In diesem Schritt werden die erforderlichen Datenbanktabellen erstellt, um Informationen über Reisebusse, Buchungen, Kunden und andere relevante Daten zu speichern.
+
+#### API ZUGRIFFE
+Hier werden API-Zugriffe implementiert, um auf die Datenbank zuzugreifen und CRUD-Operationen (Create, Read, Update, Delete) durchzuführen.
+
+#### DATENVERWALTUNG IM PROGRAMM
+In diesem Meilenstein erfolgt die Integration der Datenverwaltungsfunktionen in die Webanwendung. Kunden sollen in der Lage sein, Buchungen vorzunehmen, Busse zu reservieren und weitere Verwaltungsaufgaben durchzuführen.
+
+#### WEBDESIGN
+Hier wird das Benutzererlebnis (User Experience, UX) und das Benutzerinterface (User Interface, UI) gestaltet. Das Design sollte benutzerfreundlich und ansprechend sein, um eine positive Nutzererfahrung sicherzustellen.
+
+#### BUGFIXING UND GGF. ERWEITERUNGEN
+Nach Abschluss der Hauptentwicklungsphase werden eventuell auftretende Fehler behoben, und es werden gegebenenfalls zusätzliche Funktionen oder Verbesserungen hinzugefügt.
+TESTPHASE (01.01.2024) Nach der Implementierung sollten umfangreiche Tests durchgeführt werden, um sicherzustellen, dass die Software stabil und fehlerfrei läuft.
+
+#### DOKUMENTATION
+Eine ausführliche Dokumentation sollte erstellt werden, um Entwicklern und Benutzern die Nutzung und Wartung der Software zu erleichtern.
+
+
+@startgantt
+Project starts 2023-09-04
+[Webdesign] starts 2023-09-04 and ends 2023-10-20 
+[Database] starts 2023-09-04 and ends 2023-09-29
+[API] starts at [Database]'s end and ends 2023-10-06
+[Datamanagement] starts at [API]'s end and ends 2023-10-13
+[Bugfix & Features] starts at [Datamanagement]'s end and ends 2023-11-11
+[Testing] starts at [Datamanagement]'s end and ends 2024-01-01
+[Documentation] starts at [Bugfix & Features]'s end and ends 2024-02-01
+
+@endgantt
+
+
+
 # Supabase Starter
 
 This starter configures Supabase Auth to use cookies, making the user's session available throughout the entire Next.js app - Client Components, Server Components, Route Handlers, Server Actions and Middleware.
