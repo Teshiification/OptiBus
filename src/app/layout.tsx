@@ -2,6 +2,7 @@ import './globals.css';
 import Link from 'next/link';
 import LogoutButton from '@ui/LogoutButton';
 import NextJsLogo from '@ui/NextJsLogo';
+import { redirect } from 'next/navigation';
 import { GetUser } from '@/lib/database';
 
 export const dynamic = 'force-dynamic';
@@ -17,7 +18,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const user = await GetUser();
-
+  if (!GetUser()) redirect('login');
   return (
     <html lang="en">
       <body className="min-h-screen w-screen overflow-x-hidden bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 flex flex-col items-center select-none">
@@ -29,7 +30,7 @@ export default async function RootLayout({
             <NextJsLogo />
             {user ? (
               <div className="flex items-center gap-4">
-                Hey, {user?.email}!
+                Hey, {user?.email.toString().split('@')[0]}!
                 <LogoutButton />
               </div>
             ) : (

@@ -1,3 +1,4 @@
+import LandingPage from '@/components/ui/LandingPage/LandingPage';
 import TicketCarousel from '@/components/ui/Tickets/TicketCarousel';
 import { GetUser } from '@/lib/database';
 
@@ -18,7 +19,7 @@ export default async function Index() {
             <p>Test</p>
           </>
         ) : (
-          <div>Entdecken Sie neue Reiseziele.</div>
+          <LandingPage />
         )}
       </div>
     </div>

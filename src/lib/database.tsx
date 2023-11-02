@@ -1,27 +1,20 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import {
+  User,
+  createServerComponentClient
+} from '@supabase/auth-helpers-nextjs';
+import { UUID } from 'crypto';
 import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
-export interface User {
-  id?: string; // User ID
-  email?: string; // User's email address
-  phone?: string; // User's phone number (optional)
-  app_metadata?: {
-    provider: string; // Authentication provider (e.g., "google" or "github")
-    [key: string]: any; // Any additional custom metadata
-  };
-  user_metadata?: {
-    [key: string]: any; // User-specific metadata
-  };
-  created_at?: string; // Timestamp for user creation
-  updated_at?: string; // Timestamp for user profile updates
-}
-
 export interface Driver {
-  name: string;
-  lastname: string;
-  license_expiring: Date;
+  driver_id?: UUID;
+  first_name?: string;
+  last_name?: string;
+  license_number?: number;
+  license_date?: Date;
+  tel_number?: string;
+  status?: boolean;
 }
 
 export interface Ticket {
@@ -41,13 +34,14 @@ export interface Passanger {
 }
 
 export interface Bus {
-  name: string;
-  licenseplate: string;
-  horsepower: number;
-  fuel_consumption_per_hour: number;
-  gastank_capacity: number;
-  passanger_capacity: number;
-  storage_capacity: number;
+  bus_id?: UUID;
+  bus_number?: number;
+  capacity?: number;
+  licenseplate?: string;
+  model?: string;
+  year?: number;
+  tuev?: Date;
+  status?: boolean;
 }
 
 export interface Route {
@@ -63,10 +57,11 @@ export interface Travel {
   route: Route;
 }
 
-const supabase = createServerComponentClient({ cookies });
+export const supabase = createServerComponentClient({ cookies });
+
 export const GetUser = async () => {
   const {
     data: { user }
   } = await supabase.auth.getUser();
-  return user || null;
+  return (user as User) || null;
 };
