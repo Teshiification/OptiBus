@@ -7,15 +7,15 @@ import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
-export interface Driver {
-  driver_id?: UUID;
-  first_name?: string;
-  last_name?: string;
-  license_number?: number;
-  license_date?: Date;
-  tel_number?: string;
-  status?: boolean;
-}
+export type Driver = {
+  driver_id: UUID;
+  first_name: string;
+  last_name: string;
+  license_number: number;
+  license_date: Date;
+  tel_number: string;
+  status: boolean;
+};
 
 export interface Ticket {
   id: string;
@@ -35,19 +35,19 @@ export interface Passanger {
 
 export interface Bus {
   bus_id?: UUID;
-  bus_number?: number;
-  capacity?: number;
-  licenseplate?: string;
-  model?: string;
-  year?: number;
-  tuev?: Date;
-  status?: boolean;
+  bus_number: number;
+  capacity: number;
+  licenseplate: string;
+  model: string;
+  year: number;
+  tuev: string;
+  status: boolean;
 }
 
 export interface Route {
   start: GeolocationCoordinates;
   destination: GeolocationCoordinates;
-  stops?: GeolocationCoordinates[];
+  stops: GeolocationCoordinates[];
 }
 
 export interface Travel {

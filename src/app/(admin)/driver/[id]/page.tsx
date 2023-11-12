@@ -1,13 +1,13 @@
-import NewDriver from '@/components/ui/Driver/NewDriver';
+import Driver from '@/components/ui/Driver/Driver';
 import {
-  Session,
-  createServerComponentClient
+  createServerComponentClient,
+  Session
 } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
-const DriverPage = async () => {
+const DriverPage = async (props: any) => {
   const supabase = createServerComponentClient({ cookies });
   const {
     data: { session }
@@ -16,7 +16,7 @@ const DriverPage = async () => {
   if (session)
     return (
       <div className="w-full h-full">
-        <NewDriver session={session as Session} />
+        <Driver session={session as Session} id={props.params.id} />
       </div>
     );
 };

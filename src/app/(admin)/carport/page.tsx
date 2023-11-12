@@ -13,11 +13,12 @@ const CarportPage = async () => {
     data: { session }
   } = await supabase.auth.getSession();
 
-  return (
-    <div className="w-full h-full">
-      <Carport session={session as Session} newEntry />
-    </div>
-  );
+  if (session)
+    return (
+      <div className="w-full h-full">
+        <Carport session={session} newEntry />
+      </div>
+    );
 };
 
 export default CarportPage;

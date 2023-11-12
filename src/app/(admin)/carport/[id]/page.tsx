@@ -10,6 +10,7 @@ const CarPage = async (props: any) => {
   const {
     data: { session }
   } = await supabase.auth.getSession();
-  return <Carport session={session as Session} id={props.params.id} />;
+  if (session)
+    return <Carport session={session as Session} id={props.params.id} />;
 };
 export default CarPage;

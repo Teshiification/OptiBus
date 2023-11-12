@@ -1,34 +1,43 @@
-export interface FormProps {
+'use client';
+import React from 'react';
+
+interface FormProps {
   title: string;
   value: any;
-  setData: any;
+  setData: (value: any) => void;
 }
 
-const labelClassName = 'text-xs italic text-slate-500';
-const inputClassName = 'w-80 bg-white/10 rounded p-1';
-export const Form = (props: FormProps) => {
+const containerClassName = 'w-full';
+const labelClassName =
+  'flex flex-col rounded pt-1 w-full bg-white/10 text-gray-400 italic text-clip px-2';
+const inputClassName = 'bg-white/5 text-gray-100 rounded h-10 pl-1';
+
+const Form = (props: FormProps) => {
   const GenerateInput = () => {
     return typeof props.value === 'number'
       ? GenerateNumberInput(props.value, props.setData)
+      : typeof props.value === 'boolean'
+      ? GenerateBooleanInput(props.value, props.setData)
       : GenerateStringInput(props.value, props.setData);
   };
 
   return (
-    <>
-      <label className={labelClassName}>driver Nummer</label>
-      <GenerateInput />
-    </>
+    <div className={containerClassName}>
+      <label className={labelClassName}>
+        {props.title}
+        <GenerateInput key={props.title} />
+      </label>
+    </div>
   );
 };
 
-function GenerateNumberInput(value: any, setData: any) {
+function GenerateNumberInput(value: any, setData: (value: any) => void) {
   return (
     <input
       className={inputClassName}
       type="number"
       step="1"
       min={0}
-      max={999}
       value={value}
       onChange={(e) => setData(Number(e.target.value))}
       required
@@ -36,7 +45,7 @@ function GenerateNumberInput(value: any, setData: any) {
   );
 }
 
-function GenerateStringInput(value: any, setData: any) {
+function GenerateStringInput(value: any, setData: (value: any) => void) {
   return (
     <input
       className={inputClassName}
@@ -47,3 +56,17 @@ function GenerateStringInput(value: any, setData: any) {
     />
   );
 }
+
+function GenerateBooleanInput(value: any, setData: (value: any) => void) {
+  return (
+    <input
+      className={inputClassName}
+      type="checkbox"
+      checked={value}
+      onChange={(e) => setData(e.target.checked)}
+      required
+    />
+  );
+}
+
+export default Form;

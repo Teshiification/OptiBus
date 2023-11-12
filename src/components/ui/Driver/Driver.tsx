@@ -1,5 +1,8 @@
 'use client';
-import { Form } from '@/components/Form';
+import Form from '@/components/Form';
+import FormGenerator, {
+  GenerateInputField
+} from '@/components/core/FormGenerator/FormGenerator';
 import { Driver } from '@/lib/database';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Session } from 'next-auth';
@@ -7,7 +10,6 @@ import { FC, useEffect, useState } from 'react';
 
 export interface DriverProps {
   id?: number;
-  newEntry?: boolean;
   session?: Session;
 }
 
@@ -54,27 +56,36 @@ const Driver: FC<DriverProps> = (props: DriverProps) => {
     newData.tel_number = telNumber;
     newData.status = status;
 
-    if (props?.newEntry) {
-      const { data, error } = await supabase.from('driveres').insert([newData]);
-      alert(error || 'Erfolgreich erstellt');
-    } else {
-      const { data, error } = await supabase
-        .from('driveres')
-        .update(newData)
-        .eq('driver_id', driverData?.driver_id);
-      alert(error || 'Erfolgreich gespeichert');
-    }
+    const { data, error } = await supabase
+      .from('driveres')
+      .update(newData)
+      .eq('driver_id', driverData?.driver_id);
+    alert(error || 'Erfolgreich gespeichert');
   };
-
-  const containerClassName = 'flex flex-col gap-1';
-  const labelClassName = 'text-xs italic text-slate-500';
-  const inputClassName = 'w-80 bg-white/10 rounded p-1';
 
   return (
     <form
       onSubmit={handleSubmit}
       className="p-10 h-full w-full flex flex-col justify-around place-items-center justify-items-center gap-2"
     >
+      {GenerateInputField('Aktiv', status, (value) =>
+        setStatus(Boolean(value.target.value))
+      )}
+      {GenerateInputField('Vorname', firstName, (value) =>
+        setFirstName(value.target.value)
+      )}
+      {GenerateInputField('Nachname', lastName, (value) =>
+        setLastName(value.target.value)
+      )}
+      {GenerateInputField('Fahrerlaubnis Nummer', licenseNumber, (value) =>
+        setLicenseNumber(Number(value.target.value))
+      )}
+      {GenerateInputField('Fahrerlaubnis Datum', licenseDate, (value) =>
+        setLicenseDate(new Date(value.target.value))
+      )}
+      {GenerateInputField('Telefon Nummer', telNumber, (value) =>
+        setTelNumber(value.target.value)
+      )}
       <button
         type="submit"
         className="w-full justify-self-end p-2 bg-green-600 hover:bg-green-500 rounded"
