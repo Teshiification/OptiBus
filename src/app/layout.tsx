@@ -1,9 +1,5 @@
-import './globals.css';
-import Link from 'next/link';
-import LogoutButton from '@ui/LogoutButton';
-import NextJsLogo from '@ui/NextJsLogo';
-import { redirect } from 'next/navigation';
-import { GetUser } from '@/lib/database';
+import '@/styles/globals.css';
+import { ThemeProvider } from '@/components/ui/theme-provider';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,33 +13,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await GetUser();
-  if (!GetUser()) redirect('login');
   return (
-    <html lang="en">
-      <body className="min-h-screen w-screen overflow-x-hidden bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 flex flex-col items-center select-none">
-        <nav className="w-full flex justify-center border-b border-gray-800 h-16">
-          <div className="w-full flex justify-between items-center p-3 text-sm">
-            <Link href="/" className="font-semibold text-lg font-serif italic">
-              OptiBus
-            </Link>
-            <NextJsLogo />
-            {user ? (
-              <div className="flex items-center gap-4">
-                Hey, {user?.email.toString().split('@')[0]}!
-                <LogoutButton />
-              </div>
-            ) : (
-              <Link
-                href="/login"
-                className="py-2 px-4 rounded-md no-underline bg-tremor-brand hover:bg-tremor-brand-subtle"
-              >
-                Login
-              </Link>
-            )}
-          </div>
-        </nav>
-        <main className="w-full h-full">{children}</main>
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen w-screen overflow-x-hidden bg-background text-accent dark:text-primary flex flex-col items-center select-none">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <main className="w-full h-full">{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );

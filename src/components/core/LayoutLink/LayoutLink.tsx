@@ -26,7 +26,7 @@ const LayoutLink = ({ children, key, href }: LayoutLinkProps) => {
             })
           )
             return true;
-        }) && 'border-r-2 border-blue-500'
+        }) && 'border-r-2 border-primary'
       }`}
     >
       {children}

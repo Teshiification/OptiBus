@@ -11,7 +11,7 @@ const Toggle: FC<ToggleProps> = (props: ToggleProps) => {
   const [active, setActive] = useState<boolean>(props.value);
 
   useEffect(() => {
-    props.setter(active);
+    props.setter && props.setter(active);
   }, [active, props.setter]);
 
   return (
