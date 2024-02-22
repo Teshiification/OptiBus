@@ -1,7 +1,12 @@
 'use client';
 import { FormInput } from '@/components/core/form-input';
 import { SubmitButton } from '@/components/ui/SubmitButton';
-import { getDefaultUser, insertUser, updateUser } from '@/lib/supabase/users';
+import {
+  deleteUser,
+  getDefaultUser,
+  insertUser,
+  updateUser
+} from '@/lib/supabase/users';
 import React, { FC, useState } from 'react';
 import { Form } from '../Form';
 import { DeleteButton } from '@/components/ui/DeleteButton';
@@ -17,6 +22,12 @@ const UserForm: FC<UserProps> = ({ user }) => {
     const promise = formData.id
       ? await updateUser(formData)
       : await insertUser(formData);
+    if (promise) alert('Erfolgreich gespeichert');
+    else alert('Fehler beim speichern');
+  };
+
+  const handleDelete = async () => {
+    const promise = await deleteUser(formData.id);
     if (promise) alert('Erfolgreich gespeichert');
     else alert('Fehler beim speichern');
   };
@@ -40,8 +51,8 @@ const UserForm: FC<UserProps> = ({ user }) => {
         />
       ))}
       <div className="flex gap-4">
-        <SubmitButton />
-        {formData.id && <DeleteButton />}
+        <SubmitButton onClick={handleSubmit} />
+        {formData.id && <DeleteButton onClick={handleDelete} />}
       </div>
     </Form>
   );

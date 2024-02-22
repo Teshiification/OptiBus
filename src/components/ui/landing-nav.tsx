@@ -17,7 +17,7 @@ const LandingNav = async () => {
         <NextJsLogo />
         {user ? (
           <div className="flex items-center gap-4">
-            Hey, {user && user?.email.toString().split('@')[0]}!
+            Hey, {user.email && user?.email.toString().split('@')[0]}!
             <LogoutButton />
           </div>
         ) : (

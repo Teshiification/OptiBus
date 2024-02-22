@@ -2,6 +2,7 @@
 import { FormInput } from '@/components/core/form-input';
 import { SubmitButton } from '@/components/ui/SubmitButton';
 import {
+  deletePayment,
   getDefaultPayment,
   insertPayment,
   updatePayment
@@ -25,6 +26,12 @@ const PaymentForm: FC<PaymentProps> = ({ payment }) => {
     else alert('Fehler beim speichern');
   };
 
+  const handleDelete = async () => {
+    const promise = await deletePayment(formData.id);
+    if (promise) alert('Erfolgreich gespeichert');
+    else alert('Fehler beim speichern');
+  };
+
   const handleInputChange = (key: string, value: any) => {
     setFormData({ ...formData, [key]: value });
   };
@@ -44,8 +51,8 @@ const PaymentForm: FC<PaymentProps> = ({ payment }) => {
         />
       ))}
 
-      <SubmitButton />
-      <DeleteButton />
+      <SubmitButton onClick={handleSubmit} />
+      {formData.id && <DeleteButton onClick={handleDelete} />}
     </Form>
   );
 };

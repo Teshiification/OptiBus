@@ -2,6 +2,7 @@
 import { FormInput } from '@/components/core/form-input';
 import { SubmitButton } from '@/components/ui/SubmitButton';
 import {
+  deleteEmployee,
   getDefaultEmployee,
   insertEmployee,
   updateEmployee
@@ -26,7 +27,11 @@ const EmployeeForm: FC<EmployeeProps> = ({ employee }) => {
     if (promise) alert('Erfolgreich gespeichert');
     else alert('Fehler beim speichern');
   };
-
+  const handleDelete = async () => {
+    const promise = await deleteEmployee(formData.id);
+    if (promise) alert('Erfolgreich gespeichert');
+    else alert('Fehler beim speichern');
+  };
   const handleInputChange = (key: string, value: any) => {
     setFormData({ ...formData, [key]: value });
   };
@@ -46,8 +51,8 @@ const EmployeeForm: FC<EmployeeProps> = ({ employee }) => {
         />
       ))}
 
-      <SubmitButton />
-      <DeleteButton />
+      <SubmitButton onClick={handleSubmit} />
+      {formData.id && <DeleteButton onClick={handleDelete} />}
     </Form>
   );
 };

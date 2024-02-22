@@ -1,7 +1,12 @@
 'use client';
 import { FormInput } from '@/components/core/form-input';
 import { SubmitButton } from '@/components/ui/SubmitButton';
-import { getDefaultBus, insertBus, updateBus } from '@/lib/supabase/buses';
+import {
+  deleteBus,
+  getDefaultBus,
+  insertBus,
+  updateBus
+} from '@/lib/supabase/buses';
 import React, { FC, useState } from 'react';
 import { Form } from '../Form';
 import { DeleteButton } from '@/components/ui/DeleteButton';
@@ -21,6 +26,11 @@ const BusForm: FC<BusProps> = ({ bus }) => {
     else alert('Fehler beim speichern');
   };
 
+  const handleDelete = async () => {
+    const promise = await deleteBus(formData.id);
+    if (promise) alert('Erfolgreich gespeichert');
+    else alert('Fehler beim speichern');
+  };
   const handleInputChange = (key: string, value: any) => {
     setFormData({ ...formData, [key]: value });
   };
@@ -40,8 +50,8 @@ const BusForm: FC<BusProps> = ({ bus }) => {
         />
       ))}
 
-      <SubmitButton />
-      <DeleteButton />
+      <SubmitButton onClick={handleSubmit} />
+      {formData.id && <DeleteButton onClick={handleDelete} />}
     </Form>
   );
 };

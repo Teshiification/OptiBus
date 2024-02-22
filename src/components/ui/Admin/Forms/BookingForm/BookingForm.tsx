@@ -2,6 +2,7 @@
 import { FormInput } from '@/components/core/form-input';
 import { SubmitButton } from '@/components/ui/SubmitButton';
 import {
+  deleteBooking,
   getDefaultBooking,
   insertBooking,
   updateBooking
@@ -22,6 +23,12 @@ const BookingForm: FC<BookingProps> = ({ booking, className }) => {
     const promise = formData.id
       ? await updateBooking(formData)
       : await insertBooking(formData);
+    if (promise) alert('Erfolgreich gespeichert');
+    else alert('Fehler beim speichern');
+  };
+
+  const handleDelete = async () => {
+    const promise = await deleteBooking(formData.id);
     if (promise) alert('Erfolgreich gespeichert');
     else alert('Fehler beim speichern');
   };
@@ -47,8 +54,8 @@ const BookingForm: FC<BookingProps> = ({ booking, className }) => {
           />
         ))}
 
-        <SubmitButton />
-        <DeleteButton />
+        <SubmitButton onClick={handleSubmit} />
+        {formData.id && <DeleteButton onClick={handleDelete} />}
       </Form>
     </div>
   );

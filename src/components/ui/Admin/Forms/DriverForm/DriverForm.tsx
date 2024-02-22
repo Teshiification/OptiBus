@@ -2,6 +2,7 @@
 import { FormInput } from '@/components/core/form-input';
 import { SubmitButton } from '@/components/ui/SubmitButton';
 import {
+  deleteDriver,
   getDefaultDriver,
   insertDriver,
   updateDriver
@@ -21,6 +22,11 @@ const DriverForm: FC<DriverProps> = ({ driver }) => {
     const promise = formData.id
       ? await updateDriver(formData)
       : await insertDriver(formData);
+    if (promise) alert('Erfolgreich gespeichert');
+    else alert('Fehler beim speichern');
+  };
+  const handleDelete = async () => {
+    const promise = await deleteDriver(formData.id);
     if (promise) alert('Erfolgreich gespeichert');
     else alert('Fehler beim speichern');
   };
@@ -44,8 +50,8 @@ const DriverForm: FC<DriverProps> = ({ driver }) => {
         />
       ))}
 
-      <SubmitButton />
-      <DeleteButton />
+      <SubmitButton onClick={handleSubmit} />
+      {formData.id && <DeleteButton onClick={handleDelete} />}
     </Form>
   );
 };
