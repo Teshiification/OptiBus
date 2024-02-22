@@ -82,10 +82,29 @@ async function insertPayment(payment: any) {
   }
 }
 
+async function deletePayment(id: UUID) {
+  try {
+    const { data, error } = await supabase
+      .from('payments')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (error: any) {
+    console.error('Error insert data:', error);
+    return null;
+  }
+}
+
 export {
   getDefaultPayment,
   getPayments,
   getPayment,
   insertPayment,
-  updatePayment
+  updatePayment,
+  deletePayment
 };

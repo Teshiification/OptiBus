@@ -81,11 +81,28 @@ async function insertEmployee(employee: any) {
     return null;
   }
 }
+async function deleteEmployee(id: UUID) {
+  try {
+    const { data, error } = await supabase
+      .from('emploeyees')
+      .delete()
+      .eq('id', id);
 
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (error: any) {
+    console.error('Error insert data:', error);
+    return null;
+  }
+}
 export {
   getDefaultEmployee,
   getEmployees,
   getEmployee,
   insertEmployee,
-  updateEmployee
+  updateEmployee,
+  deleteEmployee
 };

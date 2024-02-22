@@ -81,5 +81,26 @@ async function insertTrip(trip: any) {
     return null;
   }
 }
+async function deleteTrip(id: UUID) {
+  try {
+    const { data, error } = await supabase.from('trips').delete().eq('id', id);
 
-export { getDefaultTrip, getTrips, getTrip, insertTrip, updateTrip };
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (error: any) {
+    console.error('Error insert data:', error);
+    return null;
+  }
+}
+
+export {
+  getDefaultTrip,
+  getTrips,
+  getTrip,
+  insertTrip,
+  updateTrip,
+  deleteTrip
+};

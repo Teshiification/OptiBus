@@ -79,4 +79,19 @@ async function insertBus(buses: any) {
   }
 }
 
-export { getDefaultBus, getBuses, getBus, insertBus, updateBus };
+async function deleteBus(id: UUID) {
+  try {
+    const { data, error } = await supabase.from('buses').delete().eq('id', id);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (error: any) {
+    console.error('Error insert data:', error);
+    return null;
+  }
+}
+
+export { getDefaultBus, getBuses, getBus, insertBus, updateBus, deleteBus };

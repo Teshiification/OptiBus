@@ -80,4 +80,29 @@ async function insertDriver(driver: any) {
   }
 }
 
-export { getDefaultDriver, getDrivers, getDriver, insertDriver, updateDriver };
+async function deleteDriver(id: UUID) {
+  try {
+    const { data, error } = await supabase
+      .from('drivers')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (error: any) {
+    console.error('Error insert data:', error);
+    return null;
+  }
+}
+
+export {
+  getDefaultDriver,
+  getDrivers,
+  getDriver,
+  insertDriver,
+  updateDriver,
+  deleteDriver
+};

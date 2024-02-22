@@ -4,6 +4,7 @@ import { SubmitButton } from '@/components/ui/SubmitButton';
 import { getDefaultTrip, insertTrip, updateTrip } from '@/lib/supabase/trips';
 import React, { FC, useState } from 'react';
 import { Form } from '../Form';
+import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export interface TripProps {
   trip?: any;

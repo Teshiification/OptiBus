@@ -79,4 +79,26 @@ async function insertUser(user: any) {
   }
 }
 
-export { getDefaultUser, getUsers, getUser, insertUser, updateUser };
+async function deleteUser(id: UUID) {
+  try {
+    const { data, error } = await supabase.from('users').delete().eq('id', id);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (error: any) {
+    console.error('Error insert data:', error);
+    return null;
+  }
+}
+
+export {
+  getDefaultUser,
+  getUsers,
+  getUser,
+  insertUser,
+  updateUser,
+  deleteUser
+};
