@@ -1,5 +1,7 @@
 import { UUID } from 'crypto';
 import { supabase } from './supabase';
+import { Database } from '@/types/supabase';
+export type Payment = Database['public']['Tables']['payments']['Row'];
 
 function getDefaultPayment() {
   return {
@@ -12,8 +14,10 @@ function getDefaultPayment() {
 
 async function getPayments() {
   try {
-    const { data, error } = await supabase.from('payments').select('*');
-    // .returns<Database["public"]["Tables"]["payment"][]>()
+    const { data, error } = await supabase
+      .from('payments')
+      .select('*')
+      .returns<Payment[]>();
 
     if (error) {
       throw error;
@@ -32,6 +36,7 @@ async function getPayment(id: UUID) {
       .from('payments')
       .select('*')
       .eq('id', id)
+      .returns<Payment>()
       .single();
 
     if (error) {
@@ -47,56 +52,52 @@ async function getPayment(id: UUID) {
 
 async function updatePayment(payment: any) {
   try {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('payments')
       .update(payment)
-      .eq('id', payment.id)
-      .select();
-
+      .eq('id', payment.id);
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error update data:', error);
-    return null;
+    return false;
   }
 }
 
 async function insertPayment(payment: any) {
   try {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('payments')
       .insert(payment)
-      .select();
+      .returns<Payment>()
+      .single();
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error insert data:', error);
-    return null;
+    return false;
   }
 }
 
 async function deletePayment(id: UUID) {
   try {
-    const { data, error } = await supabase
-      .from('payments')
-      .delete()
-      .eq('id', id);
+    const { error } = await supabase.from('payments').delete().eq('id', id);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
-    console.error('Error insert data:', error);
-    return null;
+    console.error('Error delete data:', error);
+    return false;
   }
 }
 

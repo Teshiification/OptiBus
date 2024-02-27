@@ -28,8 +28,8 @@ const PaymentForm: FC<PaymentProps> = ({ payment }) => {
 
   const handleDelete = async () => {
     const promise = await deletePayment(formData.id);
-    if (promise) alert('Erfolgreich gespeichert');
-    else alert('Fehler beim speichern');
+    if (promise) alert('Erfolgreich gelöscht');
+    else alert('Fehler beim löschen');
   };
 
   const handleInputChange = (key: string, value: any) => {
@@ -51,7 +51,8 @@ const PaymentForm: FC<PaymentProps> = ({ payment }) => {
         />
       ))}
 
-      <SubmitButton onClick={handleSubmit} />
+      <SubmitButton />
+
       {formData.id && <DeleteButton onClick={handleDelete} />}
     </Form>
   );

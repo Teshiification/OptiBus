@@ -1,19 +1,33 @@
 import { UUID } from 'crypto';
 import { supabase } from './supabase';
+import { Database } from '@/types/supabase';
+
+export type Bus = {
+  id: number;
+  bus_number: number;
+  model: string;
+  year: number;
+  seating_capacity: number;
+  is_available: boolean;
+};
 
 function getDefaultBus() {
   return {
-    user_id: '',
-    trip_id: '',
-    buses_data: new Date(),
-    number_of_seats: 0
+    id: 0,
+    bus_number: 0,
+    model: 'Mercedes',
+    year: 2000,
+    seating_capacity: 50,
+    is_available: false
   };
 }
 
 async function getBuses() {
   try {
-    const { data, error } = await supabase.from('buses').select('*');
-    // .returns<Database["public"]["Tables"]["busess"][]>()
+    const { data, error } = await supabase
+      .from('buses')
+      .select('*')
+      .returns<Bus[]>();
 
     if (error) {
       throw error;
@@ -32,6 +46,7 @@ async function getBus(id: UUID) {
       .from('buses')
       .select('*')
       .eq('id', id)
+      .returns<Bus>()
       .single();
 
     if (error) {
@@ -47,50 +62,49 @@ async function getBus(id: UUID) {
 
 async function updateBus(buses: any) {
   try {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('buses')
       .update(buses)
-      .eq('id', buses.id)
-      .select();
+      .eq('id', buses.id);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error update data:', error);
-    return null;
+    return false;
   }
 }
 
 async function insertBus(buses: any) {
   try {
-    const { data, error } = await supabase.from('buses').insert(buses).select();
+    const { error } = await supabase.from('buses').insert(buses);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error insert data:', error);
-    return null;
+    return false;
   }
 }
 
 async function deleteBus(id: UUID) {
   try {
-    const { data, error } = await supabase.from('buses').delete().eq('id', id);
+    const { error } = await supabase.from('buses').delete().eq('id', id);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
-    console.error('Error insert data:', error);
-    return null;
+    console.error('Error delete data:', error);
+    return false;
   }
 }
 

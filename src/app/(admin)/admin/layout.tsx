@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <main className="flex flex-col overflow-hidden h-screen w-screen">
+    <main className="flex gap-4 h-screen w-screen p-4">
       <div className="fixed inset-y-0 z-50 hidden h-screen w-80 flex-col md:flex">
         <AdminSidebar />
       </div>

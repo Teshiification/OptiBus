@@ -1,5 +1,7 @@
 import { UUID } from 'crypto';
 import { supabase } from './supabase';
+import { Database } from '@/types/supabase';
+export type Driver = Database['public']['Tables']['drivers']['Row'];
 
 function getDefaultDriver() {
   return {
@@ -10,8 +12,10 @@ function getDefaultDriver() {
 
 async function getDrivers() {
   try {
-    const { data, error } = await supabase.from('drivers').select('*');
-    // .returns<Database["public"]["Tables"]["drivers"][]>()
+    const { data, error } = await supabase
+      .from('drivers')
+      .select('*')
+      .returns<Driver[]>();
 
     if (error) {
       throw error;
@@ -30,6 +34,7 @@ async function getDriver(id: UUID) {
       .from('drivers')
       .select('*')
       .eq('id', id)
+      .returns<Driver>()
       .single();
 
     if (error) {
@@ -45,56 +50,49 @@ async function getDriver(id: UUID) {
 
 async function updateDriver(driver: any) {
   try {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('drivers')
       .update(driver)
-      .eq('id', driver.id)
-      .select();
+      .eq('id', driver.id);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error update data:', error);
-    return null;
+    return false;
   }
 }
 
 async function insertDriver(driver: any) {
   try {
-    const { data, error } = await supabase
-      .from('drivers')
-      .insert(driver)
-      .select();
+    const { error } = await supabase.from('drivers').insert(driver);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error insert data:', error);
-    return null;
+    return false;
   }
 }
 
 async function deleteDriver(id: UUID) {
   try {
-    const { data, error } = await supabase
-      .from('drivers')
-      .delete()
-      .eq('id', id);
+    const { error } = await supabase.from('drivers').delete().eq('id', id);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
-    console.error('Error insert data:', error);
-    return null;
+    console.error('Error delete data:', error);
+    return false;
   }
 }
 

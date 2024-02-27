@@ -15,18 +15,20 @@ const Form: FC<FormProps> = ({
   ...props
 }) => {
   return (
-    <div className="flex size-full flex-col p-4">
-      <h2 className="text-2xl font-bold tracking-tight underline decoration-primary decoration-4 underline-offset-4">
+    <Card className="flex size-full flex-col p-4">
+      <CardHeader className="text-2xl font-bold tracking-tight underline decoration-primary decoration-4 underline-offset-4">
         {title}
-      </h2>
-      <form
-        onSubmit={onSubmit}
-        className={`flex flex-col flex-wrap justify-center gap-4 md:flex-row p-10 size-full items-center ${className}`}
-        {...props}
-      >
-        {children}
-      </form>
-    </div>
+      </CardHeader>
+      <CardContent>
+        <form
+          onSubmit={onSubmit}
+          className={`flex flex-col flex-wrap justify-center gap-4 md:flex-row p-10 size-full items-center ${className}`}
+          {...props}
+        >
+          {children}
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 

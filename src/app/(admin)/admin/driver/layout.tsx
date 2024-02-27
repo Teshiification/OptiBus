@@ -12,7 +12,7 @@ export default async function Layout({
 
   return (
     <main className="flex gap-4 h-screen w-screen p-4">
-      <Card className="w-80 ">
+      <Card className="w-80">
         <LayoutLink key={navRefs.name} href={navRefs.id}>
           {navRefs.name}
         </LayoutLink>
@@ -27,7 +27,7 @@ export default async function Layout({
           );
         })}
       </Card>
-      <Card>{children}</Card>
+      {children}
     </main>
   );
 }

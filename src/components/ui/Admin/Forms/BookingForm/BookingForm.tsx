@@ -29,8 +29,8 @@ const BookingForm: FC<BookingProps> = ({ booking, className }) => {
 
   const handleDelete = async () => {
     const promise = await deleteBooking(formData.id);
-    if (promise) alert('Erfolgreich gespeichert');
-    else alert('Fehler beim speichern');
+    if (promise) alert('Erfolgreich löschen');
+    else alert('Fehler beim löschen');
   };
 
   const handleInputChange = (key: string, value: any) => {
@@ -54,7 +54,8 @@ const BookingForm: FC<BookingProps> = ({ booking, className }) => {
           />
         ))}
 
-        <SubmitButton onClick={handleSubmit} />
+        <SubmitButton />
+
         {formData.id && <DeleteButton onClick={handleDelete} />}
       </Form>
     </div>

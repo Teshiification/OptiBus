@@ -12,7 +12,7 @@ export default async function Layout({
 
   return (
     <main className="flex gap-4 h-screen w-screen p-4">
-      <Card className="w-80 ">
+      <Card className="w-80">
         <LayoutLink key={navRefs.name} href={navRefs.id}>
           {navRefs.name}
         </LayoutLink>
@@ -22,12 +22,12 @@ export default async function Layout({
               <p className="font-thin text-xs italic h-6 opacity-50">
                 {`id: ${data?.id}`}
               </p>
-              <p className="text-white h-6">{`${data.name}`}</p>
+              <p className="text-white h-6">{`${data.bus_number}`}</p>
             </LayoutLink>
           );
         })}
       </Card>
-      <Card>{children}</Card>
+      {children}
     </main>
   );
 }

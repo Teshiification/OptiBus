@@ -28,8 +28,8 @@ const BusForm: FC<BusProps> = ({ bus }) => {
 
   const handleDelete = async () => {
     const promise = await deleteBus(formData.id);
-    if (promise) alert('Erfolgreich gespeichert');
-    else alert('Fehler beim speichern');
+    if (promise) alert('Erfolgreich gelöscht');
+    else alert('Fehler beim löschen');
   };
   const handleInputChange = (key: string, value: any) => {
     setFormData({ ...formData, [key]: value });
@@ -50,7 +50,8 @@ const BusForm: FC<BusProps> = ({ bus }) => {
         />
       ))}
 
-      <SubmitButton onClick={handleSubmit} />
+      <SubmitButton />
+
       {formData.id && <DeleteButton onClick={handleDelete} />}
     </Form>
   );

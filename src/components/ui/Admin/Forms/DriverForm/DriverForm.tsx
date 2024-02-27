@@ -27,8 +27,8 @@ const DriverForm: FC<DriverProps> = ({ driver }) => {
   };
   const handleDelete = async () => {
     const promise = await deleteDriver(formData.id);
-    if (promise) alert('Erfolgreich gespeichert');
-    else alert('Fehler beim speichern');
+    if (promise) alert('Erfolgreich gelöscht');
+    else alert('Fehler beim löschen');
   };
 
   const handleInputChange = (key: string, value: any) => {
@@ -49,8 +49,8 @@ const DriverForm: FC<DriverProps> = ({ driver }) => {
           required
         />
       ))}
+      <SubmitButton />
 
-      <SubmitButton onClick={handleSubmit} />
       {formData.id && <DeleteButton onClick={handleDelete} />}
     </Form>
   );

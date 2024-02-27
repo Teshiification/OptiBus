@@ -27,7 +27,7 @@ type NavData = {
 const navDatas: NavData[] = [
   {
     name: 'dashboard',
-    link: 'dashboard',
+    link: '',
     icon: AreaChart
   },
   {

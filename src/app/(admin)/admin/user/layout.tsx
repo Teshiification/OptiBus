@@ -27,7 +27,7 @@ export default async function Layout({
           );
         })}
       </Card>
-      <Card>{children}</Card>
+      {children}
     </main>
   );
 }

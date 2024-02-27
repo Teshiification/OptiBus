@@ -1,5 +1,8 @@
 import { UUID } from 'crypto';
 import { supabase } from './supabase';
+import { Database } from '@/types/supabase';
+
+export type Employee = Database['public']['Tables']['employees']['Row'];
 
 function getDefaultEmployee() {
   return {
@@ -12,8 +15,10 @@ function getDefaultEmployee() {
 
 async function getEmployees() {
   try {
-    const { data, error } = await supabase.from('employees').select('*');
-    // .returns<Database["public"]["Tables"]["employee"][]>()
+    const { data, error } = await supabase
+      .from('employees')
+      .select('*')
+      .returns<Employee[]>();
 
     if (error) {
       throw error;
@@ -32,6 +37,7 @@ async function getEmployee(id: UUID) {
       .from('employees')
       .select('*')
       .eq('id', id)
+      .returns<Employee>()
       .single();
 
     if (error) {
@@ -47,55 +53,48 @@ async function getEmployee(id: UUID) {
 
 async function updateEmployee(employee: any) {
   try {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('employees')
       .update(employee)
-      .eq('id', employee.id)
-      .select();
+      .eq('id', employee.id);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error update data:', error);
-    return null;
+    return false;
   }
 }
 
 async function insertEmployee(employee: any) {
   try {
-    const { data, error } = await supabase
-      .from('employees')
-      .insert(employee)
-      .select();
+    const { error } = await supabase.from('employees').insert(employee);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error insert data:', error);
-    return null;
+    return false;
   }
 }
 async function deleteEmployee(id: UUID) {
   try {
-    const { data, error } = await supabase
-      .from('emploeyees')
-      .delete()
-      .eq('id', id);
+    const { error } = await supabase.from('emploeyees').delete().eq('id', id);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
-    console.error('Error insert data:', error);
-    return null;
+    console.error('Error delete data:', error);
+    return false;
   }
 }
 export {

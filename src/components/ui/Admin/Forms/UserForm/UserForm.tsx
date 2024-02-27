@@ -2,6 +2,7 @@
 import { FormInput } from '@/components/core/form-input';
 import { SubmitButton } from '@/components/ui/SubmitButton';
 import {
+  User,
   deleteUser,
   getDefaultUser,
   insertUser,
@@ -12,7 +13,7 @@ import { Form } from '../Form';
 import { DeleteButton } from '@/components/ui/DeleteButton';
 
 export interface UserProps {
-  user?: any;
+  user?: User;
 }
 
 const UserForm: FC<UserProps> = ({ user }) => {
@@ -28,8 +29,8 @@ const UserForm: FC<UserProps> = ({ user }) => {
 
   const handleDelete = async () => {
     const promise = await deleteUser(formData.id);
-    if (promise) alert('Erfolgreich gespeichert');
-    else alert('Fehler beim speichern');
+    if (promise) alert('Erfolgreich gelöscht');
+    else alert('Fehler beim löschen');
   };
 
   const handleInputChange = (key: string, value: any) => {
@@ -51,7 +52,7 @@ const UserForm: FC<UserProps> = ({ user }) => {
         />
       ))}
       <div className="flex gap-4">
-        <SubmitButton onClick={handleSubmit} />
+        <SubmitButton />
         {formData.id && <DeleteButton onClick={handleDelete} />}
       </div>
     </Form>

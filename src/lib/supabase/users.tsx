@@ -1,5 +1,8 @@
 import { UUID } from 'crypto';
 import { supabase } from './supabase';
+import { Database } from '@/types/supabase';
+
+export type User = Database['public']['Tables']['users']['Row'];
 
 function getDefaultUser() {
   return {
@@ -12,9 +15,10 @@ function getDefaultUser() {
 
 async function getUsers() {
   try {
-    const { data, error } = await supabase.from('users').select('*');
-    // .returns<Database["public"]["Tables"]["users"][]>()
-
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .returns<User[]>();
     if (error) {
       throw error;
     }
@@ -32,6 +36,7 @@ async function getUser(id: UUID) {
       .from('users')
       .select('*')
       .eq('id', id)
+      .returns<User>()
       .single();
 
     if (error) {
@@ -47,50 +52,49 @@ async function getUser(id: UUID) {
 
 async function updateUser(user: any) {
   try {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('users')
       .update(user)
-      .eq('id', user.id)
-      .select();
+      .eq('id', user.id);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error update data:', error);
-    return null;
+    return false;
   }
 }
 
 async function insertUser(user: any) {
   try {
-    const { data, error } = await supabase.from('users').insert(user).select();
+    const { error } = await supabase.from('users').insert(user);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error insert data:', error);
-    return null;
+    return false;
   }
 }
 
 async function deleteUser(id: UUID) {
   try {
-    const { data, error } = await supabase.from('users').delete().eq('id', id);
+    const { error } = await supabase.from('users').delete().eq('id', id);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
-    console.error('Error insert data:', error);
-    return null;
+    console.error('Error delete data:', error);
+    return false;
   }
 }
 

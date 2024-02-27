@@ -29,8 +29,8 @@ const EmployeeForm: FC<EmployeeProps> = ({ employee }) => {
   };
   const handleDelete = async () => {
     const promise = await deleteEmployee(formData.id);
-    if (promise) alert('Erfolgreich gespeichert');
-    else alert('Fehler beim speichern');
+    if (promise) alert('Erfolgreich gelöscht');
+    else alert('Fehler beim löschen');
   };
   const handleInputChange = (key: string, value: any) => {
     setFormData({ ...formData, [key]: value });
@@ -51,7 +51,8 @@ const EmployeeForm: FC<EmployeeProps> = ({ employee }) => {
         />
       ))}
 
-      <SubmitButton onClick={handleSubmit} />
+      <SubmitButton />
+
       {formData.id && <DeleteButton onClick={handleDelete} />}
     </Form>
   );

@@ -1,5 +1,8 @@
 import { UUID } from 'crypto';
 import { supabase } from './supabase';
+import { Database } from '@/types/supabase';
+
+export type Booking = Database['public']['Tables']['bookings']['Row'];
 
 function getDefaultBooking() {
   return {
@@ -12,8 +15,10 @@ function getDefaultBooking() {
 
 async function getBookings() {
   try {
-    const { data, error } = await supabase.from('bookings').select('*');
-    // .returns<Database["public"]["Tables"]["bookings"][]>()
+    const { data, error } = await supabase
+      .from('bookings')
+      .select('*')
+      .returns<Booking[]>();
 
     if (error) {
       throw error;
@@ -32,6 +37,7 @@ async function getBooking(id: UUID) {
       .from('bookings')
       .select('*')
       .eq('id', id)
+      .returns<Booking>()
       .single();
 
     if (error) {
@@ -45,40 +51,36 @@ async function getBooking(id: UUID) {
   }
 }
 
-async function updateBooking(booking: any) {
+async function updateBooking(booking: Booking) {
   try {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('bookings')
       .update(booking)
-      .eq('id', booking.id)
-      .select();
+      .eq('id', booking.id);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error update data:', error);
-    return null;
+    return false;
   }
 }
 
-async function insertBooking(booking: any) {
+async function insertBooking(booking: Booking) {
   try {
-    const { data, error } = await supabase
-      .from('bookings')
-      .insert(booking)
-      .select();
+    const { error } = await supabase.from('bookings').insert(booking);
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return true;
   } catch (error: any) {
     console.error('Error insert data:', error);
-    return null;
+    return false;
   }
 }
 
