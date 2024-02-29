@@ -130,6 +130,7 @@ const AdminDashboardPage = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
+          <a href="/admin/guide">Need some help?</a>
         </div>
       </CardContent>
     </Card>

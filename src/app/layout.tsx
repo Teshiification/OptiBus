@@ -17,7 +17,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen w-screen overflow-x-hidden bg-background text-accent dark:text-primary flex flex-col items-center select-none">
+      <body className="min-h-screen w-screen overflow-x-hidden bg-background text-accent dark:text-primary flex flex-col items-center">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <main className="w-full h-full">{children}</main>
           <ToastContainer
