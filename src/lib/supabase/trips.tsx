@@ -3,9 +3,7 @@ import { supabase } from './supabase';
 import { Database } from '@/types/supabase';
 import { Bus } from './buses';
 
-export type Trip = {
-  bus_id: number;
-} & Database['public']['Tables']['trips']['Row'];
+export type Trip = Database['public']['Tables']['trips']['Row'];
 
 function getDefaultTrip() {
   return {
@@ -15,25 +13,22 @@ function getDefaultTrip() {
     arrival_time: new Date(),
     price: 0,
     seats_available: 0,
-    bus_id: 0
+    bus_number: ''
   };
 }
 
 async function getTrips() {
   try {
-    const { data, error } = await supabase
-      .from('trips')
-      .select('*')
-      .returns<Trip>();
+    const { data, error } = await supabase.from('trips').select('*');
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return (data as Trip[]) || [];
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return [];
   }
 }
 
@@ -43,7 +38,6 @@ async function getTrip(id: UUID) {
       .from('trips')
       .select('*')
       .eq('id', id)
-      .returns<Trip>()
       .single();
 
     if (error) {
@@ -53,27 +47,31 @@ async function getTrip(id: UUID) {
     return data;
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 
 async function updateTrip(trip: Trip) {
   try {
-    const { data: busData, error: busError } = await supabase
-      .from('buses')
-      .select()
-      .eq('id', trip.bus_id)
-      .returns<Bus>();
+    // if (trip.bus_number) {
+    //   const { data, error: busError } = await supabase
+    //     .from('buses')
+    //     .select()
+    //     // .eq('is_availabe', true)
+    //     .eq('bus_number', trip.bus_number)
+    //     .single();
 
-    if (busError) {
-      throw busError;
-    }
-    if (!busData.is_available) throw 'Bus not available';
+    //   if (busError) {
+    //     throw busError;
+    //   }
+    //   if (!data!.is_available) throw 'Bus not available';
+    // }
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('trips')
       .update(trip)
-      .eq('id', trip.id);
+      .eq('id', trip.id)
+      .single();
 
     if (error) {
       throw error;
@@ -88,17 +86,18 @@ async function updateTrip(trip: Trip) {
 
 async function insertTrip(trip: Trip) {
   try {
-    const { data: busData, error: busError } = await supabase
-      .from('buses')
-      .select()
-      .eq('id', trip.bus_id)
-      .returns<Bus>();
+    if (trip.bus_number) {
+      const { data: busData, error: busError } = await supabase
+        .from('buses')
+        .select()
+        .eq('bus_number', trip.bus_number)
+        .single();
 
-    if (busError) {
-      throw busError;
+      if (busError) {
+        throw busError;
+      }
+      if (!busData.is_available) throw 'Bus not available';
     }
-    if (!busData.is_available) throw 'Bus not available';
-
     const { error } = await supabase.from('trips').insert(trip);
 
     if (error) {

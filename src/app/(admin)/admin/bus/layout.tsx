@@ -1,13 +1,13 @@
 import { Card } from '@/components';
 import LayoutLink from '@/components/core/LayoutLink/LayoutLink';
-import { getBuses } from '@/lib/supabase/buses';
+import { Bus, getBuses } from '@/lib/supabase/buses';
 
 export default async function Layout({
   children
 }: {
   children: React.ReactNode;
 }) {
-  const bus = await getBuses();
+  const bus: Bus[] = await getBuses();
   const navRefs = { name: 'Neu', id: '/admin/bus' };
 
   return (

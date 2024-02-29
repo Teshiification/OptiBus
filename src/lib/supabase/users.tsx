@@ -15,18 +15,15 @@ function getDefaultUser() {
 
 async function getUsers() {
   try {
-    const { data, error } = await supabase
-      .from('users')
-      .select('*')
-      .returns<User[]>();
+    const { data, error } = await supabase.from('users').select('*');
     if (error) {
       throw error;
     }
 
-    return data;
+    return (data as User[]) || [];
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 
@@ -36,7 +33,6 @@ async function getUser(id: UUID) {
       .from('users')
       .select('*')
       .eq('id', id)
-      .returns<User>()
       .single();
 
     if (error) {
@@ -46,7 +42,7 @@ async function getUser(id: UUID) {
     return data;
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 

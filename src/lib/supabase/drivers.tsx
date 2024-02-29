@@ -12,19 +12,16 @@ function getDefaultDriver() {
 
 async function getDrivers() {
   try {
-    const { data, error } = await supabase
-      .from('drivers')
-      .select('*')
-      .returns<Driver[]>();
+    const { data, error } = await supabase.from('drivers').select('*');
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return (data as Driver[]) || [];
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 
@@ -34,7 +31,6 @@ async function getDriver(id: UUID) {
       .from('drivers')
       .select('*')
       .eq('id', id)
-      .returns<Driver>()
       .single();
 
     if (error) {
@@ -44,7 +40,7 @@ async function getDriver(id: UUID) {
     return data;
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 

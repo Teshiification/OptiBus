@@ -14,19 +14,16 @@ function getDefaultPayment() {
 
 async function getPayments() {
   try {
-    const { data, error } = await supabase
-      .from('payments')
-      .select('*')
-      .returns<Payment[]>();
+    const { data, error } = await supabase.from('payments').select('*');
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return (data as Payment[]) || [];
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 
@@ -36,7 +33,6 @@ async function getPayment(id: UUID) {
       .from('payments')
       .select('*')
       .eq('id', id)
-      .returns<Payment>()
       .single();
 
     if (error) {
@@ -46,7 +42,7 @@ async function getPayment(id: UUID) {
     return data;
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 
@@ -69,11 +65,7 @@ async function updatePayment(payment: any) {
 
 async function insertPayment(payment: any) {
   try {
-    const { error } = await supabase
-      .from('payments')
-      .insert(payment)
-      .returns<Payment>()
-      .single();
+    const { error } = await supabase.from('payments').insert(payment).single();
 
     if (error) {
       throw error;

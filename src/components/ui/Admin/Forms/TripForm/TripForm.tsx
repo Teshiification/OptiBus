@@ -10,6 +10,7 @@ import {
 import React, { FC, useState } from 'react';
 import { Form } from '../Form';
 import { DeleteButton } from '@/components/ui/DeleteButton';
+import { toast } from 'react-toastify';
 
 export interface TripProps {
   trip?: any;
@@ -18,17 +19,19 @@ export interface TripProps {
 const TripForm: FC<TripProps> = ({ trip }) => {
   const [formData, setFormData] = useState<any>(trip || getDefaultTrip());
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     const promise = formData.id
       ? await updateTrip(formData)
       : await insertTrip(formData);
-    if (promise) alert('Erfolgreich gespeichert');
-    else alert('Fehler beim speichern');
+    if (promise) toast.success('Erfolgreich gespeichert');
+    else toast.error('Fehler beim speichern');
   };
-  const handleDelete = async () => {
+  const handleDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
     const promise = await deleteTrip(formData.id);
-    if (promise) alert('Erfolgreich gelöscht');
-    else alert('Fehler beim löschen');
+    if (promise) toast.success('Erfolgreich gelöscht');
+    else toast.error('Fehler beim löschen');
   };
   const handleInputChange = (key: string, value: any) => {
     setFormData({ ...formData, [key]: value });

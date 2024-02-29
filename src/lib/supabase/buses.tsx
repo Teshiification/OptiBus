@@ -2,18 +2,10 @@ import { UUID } from 'crypto';
 import { supabase } from './supabase';
 import { Database } from '@/types/supabase';
 
-export type Bus = {
-  id: number;
-  bus_number: number;
-  model: string;
-  year: number;
-  seating_capacity: number;
-  is_available: boolean;
-};
+export type Bus = Database['public']['Tables']['buses']['Row'];
 
 function getDefaultBus() {
   return {
-    id: 0,
     bus_number: 0,
     model: 'Mercedes',
     year: 2000,
@@ -24,19 +16,16 @@ function getDefaultBus() {
 
 async function getBuses() {
   try {
-    const { data, error } = await supabase
-      .from('buses')
-      .select('*')
-      .returns<Bus[]>();
+    let { data, error } = await supabase.from('buses').select('*');
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return (data as Bus[]) || [];
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return [];
   }
 }
 
@@ -46,7 +35,6 @@ async function getBus(id: UUID) {
       .from('buses')
       .select('*')
       .eq('id', id)
-      .returns<Bus>()
       .single();
 
     if (error) {
@@ -56,7 +44,7 @@ async function getBus(id: UUID) {
     return data;
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 

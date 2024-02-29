@@ -1,8 +1,9 @@
 'use client';
 import { FC, ChangeEvent } from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { ReactDatePicker } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CopyToClipboardButton from '../ui/clipboard-button';
+import Toggle from './Toggle/Toggle';
 
 export interface FormInputProps {
   name: string;
@@ -26,50 +27,57 @@ const FormInput: FC<FormInputProps> = ({
     handleChange(name, date);
   };
 
-  const inputType =
-    typeof value === 'number'
-      ? 'number'
-      : typeof value === 'object' && value instanceof Date
-      ? 'date'
-      : 'text';
+  let inputElement: JSX.Element;
 
-  return (
-    <div className={`flex flex-col w-full gap-1 rounded-md ${className}`}>
-      <p
-        className={
-          'flex flex-col rounded py-1 w-full text-primary italic text-clip px-2'
-        }
-      >
-        {name.toUpperCase()}
-      </p>
-      {inputType === 'date' ? (
+  if (typeof value === 'boolean') {
+    inputElement = (
+      <Toggle
+        checked={value}
+        text={value.toString()}
+        onChange={(e: any) => {
+          handleChange(name, e.target.checked);
+        }}
+      />
+    );
+  } else {
+    const inputType =
+      typeof value === 'number'
+        ? 'number'
+        : typeof value === 'object' && value instanceof Date
+        ? 'date'
+        : 'text';
+
+    inputElement =
+      inputType === 'date' ? (
         <DatePicker
+          required={typeof inputType !== null}
+          showTimeInput={true}
           selected={value}
           onChange={onChangeDatePicker}
-          className={
-            'bg-background text-primary dark:focus:bg-primary dark:text-secondary-foreground rounded-md h-10 w-full px-2 border-2 border-accent disabled:cursor-not-allowed'
-          }
+          className="rounded-md h-10 w-full px-2 border-2 border-accent"
           disabled={name === 'id'}
         />
       ) : (
-        <div className="relative">
-          {(name === 'id' || name.includes('_id')) && (
-            <CopyToClipboardButton
-              value={value}
-              className="absolute h-full align-middle right-0"
-            />
-          )}
-          <input
-            className={
-              'bg-background text-primary dark:focus:bg-primary dark:text-secondary-foreground rounded-md h-10 w-full px-2 border-2 border-accent disabled:cursor-not-allowed'
-            }
-            value={value}
-            onChange={onChange}
-            disabled={name === 'id'}
-            type={inputType}
-          />
-        </div>
-      )}
+        <input
+          className="rounded-md h-10 w-full px-2 border-2 border-accent"
+          required={typeof inputType !== null}
+          value={value}
+          onChange={onChange}
+          disabled={name === 'id'}
+          type={inputType}
+        />
+      );
+  }
+
+  return (
+    <div className={`flex flex-col w-80 mx-auto gap-1 rounded-md ${className}`}>
+      <p className="rounded py-1 text-primary italic text-clip px-2">
+        {name.toUpperCase()}
+      </p>
+      <div className="flex">
+        {inputElement}
+        <CopyToClipboardButton value={value} className="w-8" />
+      </div>
     </div>
   );
 };

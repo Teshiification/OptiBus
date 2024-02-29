@@ -15,19 +15,16 @@ function getDefaultBooking() {
 
 async function getBookings() {
   try {
-    const { data, error } = await supabase
-      .from('bookings')
-      .select('*')
-      .returns<Booking[]>();
+    const { data, error } = await supabase.from('bookings').select('*');
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return (data as Booking[]) || [];
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return [];
   }
 }
 
@@ -37,7 +34,6 @@ async function getBooking(id: UUID) {
       .from('bookings')
       .select('*')
       .eq('id', id)
-      .returns<Booking>()
       .single();
 
     if (error) {
@@ -47,7 +43,7 @@ async function getBooking(id: UUID) {
     return data;
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 

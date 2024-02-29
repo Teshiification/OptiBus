@@ -10,7 +10,7 @@ import {
 import React, { FC, useState } from 'react';
 import { Form } from '../Form';
 import { DeleteButton } from '@/components/ui/DeleteButton';
-
+import { toast } from 'react-toastify';
 export interface DriverProps {
   driver?: any;
 }
@@ -18,17 +18,19 @@ export interface DriverProps {
 const DriverForm: FC<DriverProps> = ({ driver }) => {
   const [formData, setFormData] = useState<any>(driver || getDefaultDriver());
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     const promise = formData.id
       ? await updateDriver(formData)
       : await insertDriver(formData);
-    if (promise) alert('Erfolgreich gespeichert');
-    else alert('Fehler beim speichern');
+    if (promise) toast.success('Erfolgreich gespeichert');
+    else toast.error('Fehler beim speichern');
   };
-  const handleDelete = async () => {
+  const handleDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
     const promise = await deleteDriver(formData.id);
-    if (promise) alert('Erfolgreich gelöscht');
-    else alert('Fehler beim löschen');
+    if (promise) toast.success('Erfolgreich gelöscht');
+    else toast.error('Fehler beim löschen');
   };
 
   const handleInputChange = (key: string, value: any) => {

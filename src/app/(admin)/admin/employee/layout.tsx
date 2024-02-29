@@ -1,13 +1,13 @@
 import { Card } from '@/components';
 import LayoutLink from '@/components/core/LayoutLink/LayoutLink';
-import { getEmployees } from '@/lib/supabase/employees';
+import { Employee, getEmployees } from '@/lib/supabase/employees';
 
 export default async function Layout({
   children
 }: {
   children: React.ReactNode;
 }) {
-  const employee = await getEmployees();
+  const employee: Employee[] | null = await getEmployees();
   const navRefs = { name: 'Neu', id: '/admin/employee' };
 
   return (

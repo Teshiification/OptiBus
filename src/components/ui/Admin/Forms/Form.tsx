@@ -22,7 +22,7 @@ const Form: FC<FormProps> = ({
       <CardContent>
         <form
           onSubmit={onSubmit}
-          className={`flex flex-col flex-wrap justify-center gap-4 md:flex-row p-10 size-full items-center ${className}`}
+          className={`flex flex-col justify-center gap-4 p-10 size-full items-center ${className}`}
           {...props}
         >
           {children}

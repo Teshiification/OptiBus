@@ -7,7 +7,7 @@ const CopyToClipboardButton = ({
   className
 }: {
   value: string;
-  className: string;
+  className?: string;
 }) => {
   const [copied, setCopied] = useState(false);
 

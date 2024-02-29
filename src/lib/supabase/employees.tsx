@@ -15,19 +15,16 @@ function getDefaultEmployee() {
 
 async function getEmployees() {
   try {
-    const { data, error } = await supabase
-      .from('employees')
-      .select('*')
-      .returns<Employee[]>();
+    const { data, error } = await supabase.from('employees').select('*');
 
     if (error) {
       throw error;
     }
 
-    return data;
+    return (data as Employee[]) || [];
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 
@@ -37,7 +34,6 @@ async function getEmployee(id: UUID) {
       .from('employees')
       .select('*')
       .eq('id', id)
-      .returns<Employee>()
       .single();
 
     if (error) {
@@ -47,7 +43,7 @@ async function getEmployee(id: UUID) {
     return data;
   } catch (error: any) {
     console.error('Error fetching data:', error);
-    return null;
+    return false;
   }
 }
 
