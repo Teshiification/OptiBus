@@ -32,28 +32,28 @@ const AdminDashboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersData: User[] | null = await getUsers();
+        const usersData: User[] | false = await getUsers();
         usersData && setUsers(usersData);
       } catch (error) {
         console.error('Error fetching users:', error);
       }
 
       try {
-        const employeesData: Employee[] | null = await getEmployees();
+        const employeesData: Employee[] | false = await getEmployees();
         employeesData && setEmployees(employeesData);
       } catch (error) {
         console.error('Error fetching employees:', error);
       }
 
       try {
-        const driverData: Driver[] | null = await getDrivers();
+        const driverData: Driver[] | false = await getDrivers();
         driverData && setDrivers(driverData);
       } catch (error) {
         console.error('Error fetching drivers:', error);
       }
 
       try {
-        const busData: Bus[] | null = await getBuses();
+        const busData: Bus[] | false = await getBuses();
         busData && setBuses(busData);
       } catch (error) {
         console.error('Error fetching buses:', error);

@@ -17,7 +17,7 @@ const LayoutLink = ({ children, key, href }: LayoutLinkProps) => {
     <Link
       key={key}
       href={href}
-      className={`min-w-40 whitespace-nowrap h-14 px-2 py-2 rounded font-semibold bg-black/10 hover:bg-black/5 align-middle 
+      className={`min-w-40 whitespace-nowrap h-14 px-2 py-2 rounded font-semibold bg-accent hover:bg-primary/30 items-center text-primary  align-middle 
       ${
         currentRoute.split('/').find((str) => {
           if (

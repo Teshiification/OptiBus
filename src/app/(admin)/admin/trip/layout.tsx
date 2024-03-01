@@ -7,25 +7,26 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const trips: Trip[] = await getTrips();
+  const trips: Trip[] | false = await getTrips();
   const navRefs = { name: 'Neu', id: '/admin/trip' };
 
   return (
     <main className="flex gap-4 h-screen w-screen p-4">
-      <Card className="w-80 ">
+      <Card className="w-80 gap-2">
         <LayoutLink key={navRefs.name} href={navRefs.id}>
           {navRefs.name}
         </LayoutLink>
-        {trips?.map((data, key) => {
-          return (
-            <LayoutLink key={key} href={`/admin/trip/${data.id}`}>
-              <p className="font-thin text-xs italic h-6 opacity-50">
-                {`id: ${data?.id}`}
-              </p>
-              <p className="text-white h-6">{`${data.departure_location}-${data.arrival_location}`}</p>
-            </LayoutLink>
-          );
-        })}
+        {trips &&
+          trips?.map((data, key) => {
+            return (
+              <LayoutLink key={key} href={`/admin/trip/${data.id}`}>
+                <p className="font-thin text-xs italic h-6 opacity-50">
+                  {`id: ${data?.id}`}
+                </p>
+                <p className=" h-6">{`${data.departure_location}-${data.arrival_location}`}</p>
+              </LayoutLink>
+            );
+          })}
       </Card>
       {children}
     </main>

@@ -9,8 +9,17 @@ export const siteConfig = {
       title: "Home",
       href: "/",
     },
-    {title:"Admin",
-  href:"/admin"}
+    {
+      title:"Admin",
+      href:"/admin"},
+    {
+      title: "Impressum",
+      href: "/impressum",
+    },
+    {
+      title: "Privacy",
+      href: "/dataprivacy",
+    },
   ],
   links: {
     github: "https://github.com/teshiification/optibus",

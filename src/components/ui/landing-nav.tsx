@@ -14,7 +14,7 @@ const LandingNav = async () => {
         <Link href="/" className="font-semibold text-lg font-serif italic">
           OptiBus
         </Link>
-        <NextJsLogo />
+        {/* <NextJsLogo /> */}
         {user ? (
           <div className="flex items-center gap-4">
             Hey, {user.email && user?.email.toString().split('@')[0]}!

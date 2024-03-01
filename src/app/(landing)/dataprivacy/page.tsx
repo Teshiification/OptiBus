@@ -3,7 +3,7 @@ import React from 'react';
 const DataPrivacyPage = () => {
   return (
     <div className="p-4">
-      <div className="flex flex-col space-y-4 dark:text-gray-300 select-text">
+      <div className="flex flex-col space-y-4 select-text">
         <h1 className="text-2xl font-bold mb-4">
           Datenschutzrichtlinie für die Stammdatenverwaltungssoftware von
           OptiBus Reisebusunternehmen
