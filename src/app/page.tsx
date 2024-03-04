@@ -16,7 +16,6 @@ export default async function Index() {
               //@ts-ignore
               <TicketCarousel tickets={[]} />
             }
-            <p>Test</p>
           </>
         ) : (
           <LandingPage />

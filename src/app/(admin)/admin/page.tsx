@@ -88,6 +88,12 @@ const AdminDashboardPage = () => {
       <CardContent>
         <div className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
           <div className="flex max-w-[980px] flex-row justify-center gap-2">
+            <a
+              href="/admin/guide"
+              className="rounded-lg bg-card border border-primary hover:bg-primary/30 hover:text-white transition-all duration-300 ease-in-out cursor-help w-40 h-fit p-2 align-middle text-center"
+            >
+              Need some help? Read our guide!
+            </a>
             <ResponsiveContainer width="33%" height={200}>
               <BarChart
                 data={dataPersons || []}
@@ -130,7 +136,6 @@ const AdminDashboardPage = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <a href="/admin/guide">Need some help?</a>
         </div>
       </CardContent>
     </Card>
